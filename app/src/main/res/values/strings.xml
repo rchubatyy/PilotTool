@@ -1,0 +1,68 @@
+<resources>
+    <string name="app_name">PilotTool</string>
+    <string-array name="questions">
+        <item>1.	Supervise a machine assembling washing machines</item>
+        <item>2.	Sell a real estate</item>
+        <item>3.	Farm prawns</item>
+        <item>4.	Act in an amateur theatre</item>
+        <item>5.	Research effective ways to prevent animal diseases</item>
+        <item>6.	Lay tiles in your kitchen</item>
+        <item>7.	Calculate the infection rate of a new disease</item>
+        <item>8.	Run a sport training for teenagers</item>
+        <item>9.	Develop an Excel sheet to track your tax returns</item>
+        <item>10.	Sell tickets to alternative music concerts</item>
+        <item>11.	Generate the monthly expenses summaries for a company</item>
+        <item>12.	Study the philosophical background of political movements</item>
+        <item>13.	Edit photos on a computer</item>
+        <item>14.	Repair cars</item>
+        <item>15.	Diagnose and treat cancer patients</item>
+        <item>16.	Help handicapped people with their daily activities</item>
+        <item>17.	Manage e-mails distribution in a global company</item>
+        <item>18.	Buy and sell financial products on the stock exchange</item>
+        <item>19.	Conduct physical experiments in the laboratory</item>
+        <item>20.	Perform a stand-up comedy</item>
+        <item>21.	Build a walk-in-wardrobe</item>
+        <item>22.	Teach a class in the primary school</item>
+        <item>23.	Transfer funds between banks according to guidelines</item>
+        <item>24.	Record own song</item>
+        <item>25.	Organize and schedule training events</item>
+        <item>26.	Critically review movies</item>
+        <item>27.	Guard a jewellery shop</item>
+        <item>28.	Develop a new psychological treatment for depression</item>
+        <item>29.	Give a presentation to convince the audience to invest in your idea</item>
+        <item>30.	Facilitate counselling sessions for students</item>
+        <item>31.	Manage an airport</item>
+        <item>32.	Help people with substance abuse issues</item>
+        <item>33.	Dance in a musical</item>
+        <item>34.	Edit and format a book before printing</item>
+        <item>35.	Drive Uber</item>
+        <item>36.	Run a physical rehabilitation session</item>
+        <item>37.	Manage the operations of a medium-sized supermarket</item>
+        <item>38.	Sort and archive confidential documents</item>
+        <item>39.	Volunteer to help elderly in your neighbourhood</item>
+        <item>40.	Perform as a stuntman in the action movie</item>
+        <item>41.	Study the factors modulating immune response to allergens</item>
+        <item>42.	Organise leisure time activities for tourists</item>
+        <item>43.	Run a groceries store</item>
+        <item>44.	Run statistical analysis of a provided data set</item>
+        <item>45.	Compose a new ringtone for a smartphone’s producer</item>
+        <item>46.	Paint walls in a hotel</item>
+        <item>47.	Conduct research of a soil sample to track pollution level</item>
+        <item>48.	Sell perfumes on fashion shows</item>
+    </string-array>
+    <string name="title_activity_result">ResultActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="dislike">DISLIKE</string>
+    <string name="neutral">NEUTRAL</string>
+    <string name="like">LIKE</string>
+    <string name="go_back">go back</string>
+    <string name="your_top_category_is">Your top category is:</string>
+    <string name="browse_other_categories">Browse other categories:</string>
+</resources>
