@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">PilotTool</string>
     <string-array name="questions">
-        <item>How much would you enjoy engaging in the following activities?\n  1.	Supervise a machine assembling washing machines</item>
+        <item>1.	Supervise a machine assembling washing machines</item>
         <item>2.	Sell a real estate</item>
         <item>3.	Farm prawns</item>
         <item>4.	Act in an amateur theatre</item>
@@ -66,4 +66,6 @@
     <string name="your_top_category_is">Your top category is:</string>
     <string name="browse_other_categories">Browse other categories:</string>
     <string name="init_question">How much would you enjoy engaging in the following activities?</string>
+    <string name="start">START</string>
+    <string name="please_answer_the_questions">Please answer the questions.</string>
 </resources>
