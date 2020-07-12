@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name = "question"
+            name = "quizQuestion"
             type = "au.net.australiastudy.pilottool.Question"
             />
     </data>
@@ -20,13 +20,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="48dp"
             android:layout_marginRight="20dp"
             android:gravity="center"
-            android:text="@{question.question}"
+            android:text="@{quizQuestion.name}"
             android:textColor="@color/orange"
             android:textColorLink="#FFFFFF"
             android:textSize="30sp"
+            app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,15 +36,44 @@
             android:id="@+id/backBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="18dp"
+            android:layout_marginRight="18dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/control_button"
+            android:enabled="false"
             android:onClick="goBack"
             android:text="@string/go_back"
-            android:background="#FFB74D"
             android:textColor="#FFF8E1"
-            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintEnd_toStartOf="@+id/pauseBtn" />
+
+        <Button
+            android:id="@+id/pauseBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/control_button"
+            android:onClick="pause"
+            android:text="@string/pause"
+            android:textColor="#FFF8E1"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/question" />
+            app:layout_constraintHorizontal_bias="0.486"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:id="@+id/stopBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="18dp"
+            android:layout_marginLeft="18dp"
+            android:layout_marginBottom="24dp"
+            android:background="@drawable/control_button"
+            android:onClick="stop"
+            android:text="@string/stop"
+            android:textColor="#FFF8E1"
+            app:layout_constraintBottom_toTopOf="@+id/progressBar"
+            app:layout_constraintStart_toEndOf="@+id/pauseBtn" />
 
         <com.iarcuschin.simpleratingbar.SimpleRatingBar
             android:id="@+id/proRating"
@@ -52,7 +82,7 @@
             android:layout_marginBottom="50dp"
             android:max="5"
             android:numStars="5"
-            android:rating="@{question.rating}"
+            android:rating="@{quizQuestion.rating}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +92,8 @@
             app:srb_pressedStarBackgroundColor="@color/golden_stars"
             app:srb_starBackgroundColor="@color/golden_stars"
             app:srb_starSize="52dp"
-            app:srb_starsSeparation="20dp" />
+            app:srb_starsSeparation="20dp"
+            app:srb_stepSize="1" />
 
         <TextView
             android:id="@+id/text_dislike"
@@ -98,6 +129,23 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/proRating"
             app:layout_constraintEnd_toEndOf="@+id/proRating" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginLeft="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginRight="14dp"
+            android:layout_marginBottom="14dp"
+            android:max="48"
+            android:progressTint="@color/orange"
+            app:layout_constraintBottom_toTopOf="@+id/text_neutral"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:targetApi="lollipop" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,10 +1,12 @@
 package au.net.australiastudy.pilottool;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
+import android.view.MotionEvent;
 import android.view.View;
-import android.widget.RatingBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -16,7 +18,7 @@ import java.util.Comparator;
 
 import au.net.australiastudy.pilottool.databinding.ActivityMainBinding;
 
-public class MainActivity extends AppCompatActivity implements SimpleRatingBar.OnRatingBarChangeListener {
+public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
 
 
     ActivityMainBinding bi;
@@ -24,13 +26,14 @@ public class MainActivity extends AppCompatActivity implements SimpleRatingBar.O
     int current = 0;
     boolean wentBack = false;
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initQuestions();
-        bi.setQuestion(data[0]);
-        bi.proRating.setOnRatingBarChangeListener(this);
+        bi.setQuizQuestion(data[0]);
+        bi.proRating.setOnTouchListener(this);
     }
 
 
@@ -46,49 +49,58 @@ public class MainActivity extends AppCompatActivity implements SimpleRatingBar.O
     private void previousQuestion(){
         if (current!=0){
             current--;
-            bi.setQuestion(data[current]);
+            updateQuestion();
         }
     }
 
     private void nextQuestion(){
         if (current< data.length-1){
             current++;
-            bi.setQuestion(data[current]);
+            updateQuestion();
         }
         else {
-        Intent intent = new Intent(this, ResultsActivity.class);
-        int[] order = calculateResult();
-        intent.putExtra("order", order);
-        startActivity(intent);
-        finish();
+            openResults();
         }
         if (current == 1 && !wentBack)
-            bi.backBtn.setVisibility(View.VISIBLE);
+            bi.backBtn.setEnabled(true);
     }
 
-    @Override
-    public void onRatingChanged(final SimpleRatingBar ratingBar, float rating, boolean fromUser) {
-        if (fromUser){
-            ratingBar.setIndicator(true);
-            int ratingSet = (int)Math.ceil(rating);
-            data[current].setRating(ratingSet);
-            ratingBar.setRating(ratingSet);
-            System.out.println(rating);
-            new Handler().postDelayed(new Runnable(){
-                @Override
-                public void run(){
-                    nextQuestion();
-                    ratingBar.setIndicator(false);
-                }
-            },1000);
 
+    @SuppressLint("ClickableViewAccessibility")
+    @Override
+    public boolean onTouch(View view, MotionEvent motionEvent){
+        if (motionEvent.getAction()==MotionEvent.ACTION_UP){
+            bi.proRating.setIndicator(true);
+            int ratingSet = (int) bi.proRating.getRating();
+            if (ratingSet>0) {
+                data[current].setRating(ratingSet);
+                nextQuestion();
+            }
+            bi.proRating.setIndicator(false);
         }
+        return false;
     }
 
     public void goBack(View v){
         previousQuestion();
         wentBack = true;
-        bi.backBtn.setVisibility(View.GONE);
+        bi.backBtn.setEnabled(false);
+    }
+
+    public void pause(View v){
+
+    }
+
+    public void stop(View v){
+        for (int i=current; i<data.length; i++)
+            data[i].setRating(0);
+        openResults();
+    }
+
+
+    private void updateQuestion(){
+        bi.setQuizQuestion(data[current]);
+        bi.progressBar.setProgress(current);
     }
 
     public int[] calculateResult() {
@@ -119,5 +131,13 @@ public class MainActivity extends AppCompatActivity implements SimpleRatingBar.O
         for (int i=0; i<indices.length; i++)
             results[i]= indices[i];
         return results;
+    }
+
+    private void openResults(){
+        Intent intent = new Intent(this, ResultsActivity.class);
+        int[] order = calculateResult();
+        intent.putExtra("order", order);
+        startActivity(intent);
+        finish();
     }
 }

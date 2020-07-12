@@ -66,6 +66,11 @@
     <string name="your_top_category_is">Your top category is:</string>
     <string name="browse_other_categories">Browse other categories:</string>
     <string name="init_question">How much would you enjoy engaging in the following activities?</string>
+    <string name="welcome_message">Welcome message</string>
     <string name="start">START</string>
     <string name="please_answer_the_questions">Please answer the questions.</string>
+    <string name="pause">PAUSE</string>
+    <string name="stop">STOP</string>
+    <string name="chatbot">Chatbot</string>
+    <string name="type_a_message_to_talk_to_me">Type a message to talk to me...</string>
 </resources>
