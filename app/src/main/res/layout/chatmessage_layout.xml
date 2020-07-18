@@ -1,6 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:listSelector="@android:color/transparent">
 
     <RelativeLayout
         android:id="@+id/content"
@@ -9,7 +11,8 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="8dp"
         android:background="@drawable/my_bubble"
-        android:gravity="center">
+        android:gravity="center"
+        tools:ignore="RtlHardcoded,UselessParent">
 
 
         <TextView

@@ -72,5 +72,6 @@
     <string name="pause">PAUSE</string>
     <string name="stop">STOP</string>
     <string name="chatbot">Chatbot</string>
+    <string name="startQuiz">Please click this messaage and answer the questions.</string>
     <string name="type_a_message_to_talk_to_me">Type a message to talk to me...</string>
 </resources>

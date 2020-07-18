@@ -2,6 +2,7 @@ package au.net.australiastudy.pilottool;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,28 +12,35 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
-import com.iarcuschin.simpleratingbar.SimpleRatingBar;
-
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import au.net.australiastudy.pilottool.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity implements View.OnTouchListener{
 
-
-    ActivityMainBinding bi;
-    Question[] data;
-    int current = 0;
-    boolean wentBack = false;
+    private SharedPreferences prefs;
+    private ActivityMainBinding bi;
+    private Question[] data;
+    private int current;
+    private boolean wentBack = false;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bi = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        prefs = getSharedPreferences("prefs", MODE_PRIVATE);
         initQuestions();
-        bi.setQuizQuestion(data[0]);
+        current = prefs.getInt("progress",0);
+        for (int i=0; i<current; i++)
+            data[i].setRating(prefs.getInt("rating"+i,0));
+        wentBack = prefs.getBoolean("wentBack", false);
+        bi.backBtn.setEnabled(!wentBack);
+        updateQuestion();
         bi.proRating.setOnTouchListener(this);
     }
 
@@ -70,13 +78,20 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent){
         if (motionEvent.getAction()==MotionEvent.ACTION_UP){
-            bi.proRating.setIndicator(true);
             int ratingSet = (int) bi.proRating.getRating();
-            if (ratingSet>0) {
+            if (ratingSet>0){
                 data[current].setRating(ratingSet);
-                nextQuestion();
+                bi.proRating.setIndicator(true);
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        nextQuestion();
+                        bi.proRating.setIndicator(false);
+                    }
+                },1000);
+
             }
-            bi.proRating.setIndicator(false);
+
         }
         return false;
     }
@@ -88,7 +103,16 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
     }
 
     public void pause(View v){
-
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("progress",current);
+        for (int i=0; i<current; i++)
+            editor.putInt("rating" + i, data[i].getRating());
+        editor.putBoolean("wentBack",wentBack);
+        editor.apply();
+        Intent intent = new Intent();
+        intent.putExtra("progress", current);
+        setResult(1,intent);
+        finish();
     }
 
     public void stop(View v){
@@ -129,15 +153,22 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             }
         });
         for (int i=0; i<indices.length; i++)
-            results[i]= indices[i];
+            results[i]= indices[i]+1;
         return results;
     }
 
     private void openResults(){
-        Intent intent = new Intent(this, ResultsActivity.class);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("progress",0);
+        for (int i=0; i<current; i++)
+            editor.putInt("rating" + i, 0);
+        editor.putBoolean("wentBack",false);
+        editor.apply();
+        Intent intent = new Intent();
         int[] order = calculateResult();
         intent.putExtra("order", order);
-        startActivity(intent);
+        setResult(2,intent);
         finish();
     }
+
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import androidx.annotation.NonNull;
 
 import java.util.List;
 
@@ -21,10 +22,12 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
     @Override
     public int getItemViewType(int position) {
         ChatMessage item = getItem(position);
+        assert item != null;
         return item.isMine() ? MY_MESSAGE : BOT_MESSAGE;
     }
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
         int viewType = getItemViewType(position);
         if (viewType == MY_MESSAGE) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.chatmessage_layout, parent, false);
@@ -33,8 +36,14 @@ public class ChatMessageAdapter extends ArrayAdapter<ChatMessage> {
         } else {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.botmessage_layout, parent, false);
             TextView textView = convertView.findViewById(R.id.message);
-            textView.setText(getItem(position).getContent());
+            String content = getItem(position).getContent();
+            textView.setText(content);
         }
         return convertView;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
     }
 }
