@@ -24,7 +24,9 @@ public class ChatBot {
 
 
     public enum MessageType{
-        NAME,
+        HELLO,
+        NAME_IS,
+        NAME_CALL_ME,
         NAME_ONLY,
         AGE,
         AGE_ONLY,
@@ -35,6 +37,9 @@ public class ChatBot {
     }
     
     public MessageType getMessageType(String message){
+        if (message.contains("Hello")||message.contains("Hi")||
+                message.contains("hello")||message.contains("hi"))
+            return MessageType.HELLO;
         if (message.contains("resume")||message.contains("Resume")||
                 message.contains("restart")||message.contains("Restart")||
                 message.contains("continue")||message.contains("Continue")||
@@ -47,9 +52,10 @@ public class ChatBot {
         if (message.contains("years old")||message.contains("year-old")||message.contains("year old")
                 ||message.contains("age is")||message.contains("Age is"))
             return MessageType.AGE;
-        if (message.contains("name is")||message.contains("Name is")
-                ||message.contains("Call me")||message.contains("call me"))
-            return MessageType.NAME;
+        if (message.contains("name is")||message.contains("Name is"))
+            return MessageType.NAME_IS;
+        if (message.contains("Call me")||message.contains("call me"))
+            return MessageType.NAME_CALL_ME;
         if (message.matches("^[a-zA-Z\\s]+") && !hasName())
             return MessageType.NAME_ONLY;
 
@@ -58,6 +64,8 @@ public class ChatBot {
 
     public String generateResponse(String message){
         switch(getMessageType(message)){
+            case HELLO:
+                return hasName() ? "Hi, " + getName() + "!" : "Hello! But I don't know who are you...";
             case EMAIL_ONLY:
                 setEmail(message);
                 return "This is your email: " + message + " and it has been set!";
@@ -67,6 +75,16 @@ public class ChatBot {
             case AGE:
                 age = firstIntIn(message);
                 return setAge(age) ? "Your age is set!" : "You are minor yet...";
+            case NAME_IS:
+                String name = message.substring(message.indexOf("is")+3);
+                name = removePunct(name);
+                setName(name);
+                return "OK, " + name+ ". Nice to meet you!";
+            case NAME_CALL_ME:
+                String callMe = message.substring(message.indexOf("me")+3);
+                callMe = removePunct(callMe);
+                setName(callMe);
+                return "OK! From now on, I'll call you " + callMe+ "!";
             case NAME_ONLY:
                 setName(message);
                 return "Nice to meet you, " + message + "!";
@@ -163,6 +181,15 @@ public class ChatBot {
             if (message.contains(text))
                 return true;
             return false;
+    }
+
+    private String removePunct(String message){
+        message = message.replace(".","");
+        message = message.replace(",","");
+        message = message.replace("!","");
+        message = message.replace("?","");
+        return message;
+
     }
 
 }
